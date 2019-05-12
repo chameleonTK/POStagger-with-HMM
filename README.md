@@ -13,3 +13,17 @@ python P1_POS <algorithm> <do_accuracy_test> <test_sentence>
 
 ## Example
 python P1_POS.py viterbi yes "I like cats"
+
+# Extension
+
+`````
+python P1_ExtensionDiffCorpus.py <corpus>
+`````
+
+<corpus> 	: select one of these options; brown, treebank, nps_chat, conll2000
+
+===========
+
+`````
+python P1_ExtensionDiffSmoothing.py
+`````

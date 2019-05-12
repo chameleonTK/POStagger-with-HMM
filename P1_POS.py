@@ -111,11 +111,6 @@ if __name__ == '__main__':
         accuracy = comparision["total"]["correct"]*100.0/(comparision["total"]["correct"] + comparision["total"]["incorrect"])
         print "Total {0:.2f}".format(accuracy)
 
-        # accuracy = comparision["first"]["correct"]*100.0/(comparision["first"]["correct"] + comparision["first"]["incorrect"])
-        # print "first {0:.2f}".format(accuracy)
-        # accuracy = comparision["last"]["correct"]*100.0/(comparision["last"]["correct"] + comparision["last"]["incorrect"])
-        # print "last {0:.2f}".format(accuracy)
-
     print ""
     if len(sys.argv) > 3:
         targetString = sys.argv[3]

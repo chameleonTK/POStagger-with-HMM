@@ -23,17 +23,12 @@ class ForwardBackwardPOSTagger(POSTagger):
         for i in range(2, len(sentence)-1):
             word = sentence[i]
             for tag in self.tagset:
-
-                #print "FW", tag, i
                 for prevTag in self.tagset:
                     fw[tag][i] += fw[prevTag][i-1] * transitionProb[prevTag].prob(tag) * emissionProb[tag].prob(word)
-                    #print "\t{0:.2e}*{1:.2e}*{2:.2e} = {3:.2e}; {4:.2e}".format(fw[prevTag][i-1], transitionProb[prevTag].prob(tag), emissionProb[tag].prob(word), fw[prevTag][i-1] * transitionProb[prevTag].prob(tag) * emissionProb[tag].prob(word), fw[tag][i])
                 
         # finalise
-        #print "FW", self.endWord
         for tag in self.tagset:
             fw[self.endWord][len(sentence)-1] += fw[tag][len(sentence)-2] * transitionProb[tag].prob(self.endWord)
-            #print "\t{0:.2e}*{1:.2e} = {2:.2e}; {3:.2e}".format(fw[tag][len(sentence)-2], transitionProb[tag].prob(self.endWord), fw[tag][len(sentence)-2] * transitionProb[tag].prob(self.endWord), fw[self.endWord][len(sentence)-1])
 
         return fw
 
@@ -53,14 +48,11 @@ class ForwardBackwardPOSTagger(POSTagger):
                 #print "BW", tag, i
                 for nextTag in self.tagset:
                     bw[tag][i] += bw[nextTag][i+1] * transitionProb[tag].prob(nextTag) * emissionProb[nextTag].prob(nextWord)
-                    # print "\t{0:.2e} * {1:.2e} * {2:.2e} = {3:.2e}; {4:.2e}".format(bw[nextTag][i+1], transitionProb[tag].prob(nextTag), emissionProb[nextTag].prob(nextWord), bw[nextTag][i+1] * transitionProb[tag].prob(nextTag) * emissionProb[nextTag].prob(nextWord), bw[tag][i])
                 
         # finalise
         # print "BW", self.startWord
         for tag in self.tagset:
             bw[self.startWord][0] += bw[tag][1] * transitionProb[self.startWord].prob(tag) * emissionProb[tag].prob(sentence[1])
-
-            # print "\t{0:.2e} * {1:.2e} * {2:.2e} = {3:.2e}; {4:.2e}".format(bw[tag][1], transitionProb[self.startWord].prob(tag), emissionProb[tag].prob(sentence[1]), bw[tag][1] * transitionProb[self.startWord].prob(tag) * emissionProb[tag].prob(sentence[1]), bw[self.startWord][0])
 
         return bw
     
@@ -114,6 +106,7 @@ class ForwardBackwardPOSTagger(POSTagger):
         forwardProb = self.forward(sentence, emissionProb, transitionProb)
         backwardProb = self.backward(sentence, emissionProb, transitionProb)
 
+        # debug
         # self.printEmissionProb(sentence, self.tagset, emissionProb)
         # self.printTransitionProb(sentence, self.tagset, emissionProb)
         # self.printProbTable(sentence, self.tagset, forwardProb, label="Forward Prob")

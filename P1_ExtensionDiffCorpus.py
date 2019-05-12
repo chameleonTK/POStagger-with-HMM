@@ -23,7 +23,7 @@ def getData(corpus="brown", categories=""):
     elif corpus == "treebank":
         return treebank.tagged_sents(tagset='universal')
     elif corpus == "nps_chat":
-        #Identifying Dialogue
+        #Dialogue dataset
         data = []
         posts = nps_chat.posts()
         words = nps_chat.tagged_words(tagset='universal')
